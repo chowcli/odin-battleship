@@ -64,16 +64,12 @@ const Gameboard = () => {
   }
 
   function receiveAttack(x, y) {
-    if (gameBoard[y][x] === "") {
-      gameBoard[y][x] = 0;
-      return;
-    }
+    const cell = gameBoard[y][x];
 
-    if (typeof gameBoard[y][x] === "object" && gameBoard[y][x].isHit === false) {
-      gameBoard[y][x].isHit = true;
-
-      const shipObject = getShip(gameBoard[y][x].type);
-      shipObject.isHit();
+    if (cell === "") gameBoard[y][x] = 0;
+    else if (cell.isHit === false) {
+      cell.isHit = true;
+      getShip(cell.type).isHit();
     }
   }
 
