@@ -9,8 +9,9 @@ function create2DArray() {
   return gameBoard;
 }
 
-function isOutOfBound(axisStartPoint, shipLength) {
-  return parseInt(axisStartPoint, 10) + shipLength - 1 >= 10;
+function isOutOfBounds(x, y, orientation, shipLength) {
+  const coordinate = orientation === "x" ? x : y;
+  return coordinate + shipLength - 1 >= 10;
 }
 
 function isOverlap(gameBoard, x, y, orientation, shipLength) {
@@ -43,20 +44,21 @@ const Gameboard = () => {
   }
 
   function placeShip(ship, x, y, orientation) {
-    if (
-      orientation === "x" &&
-      !isOutOfBound(x, ship.getShipLength()) &&
-      !isOverlap(gameBoard, x, y, orientation, ship.getShipLength())
-    ) {
-      for (let i = 0; i < ship.getShipLength(); i++) {
-        gameBoard[y][x + i] = { type: ship.getShipName(), isHit: false };
-      }
-    } else if (
-      !isOutOfBound(y, ship.getShipLength()) &&
-      !isOverlap(gameBoard, x, y, orientation, ship.getShipLength())
-    ) {
-      for (let i = 0; i < ship.getShipLength(); i++) {
-        gameBoard[y + i][x] = { type: ship.getShipName(), isHit: false };
+    const shipLength = ship.getShipLength();
+    const shipName = ship.getShipName();
+
+    const isValidPlacement =
+      !isOutOfBounds(x, y, orientation, shipLength) && !isOverlap(gameBoard, x, y, orientation, shipLength);
+
+    if (isValidPlacement) {
+      let row;
+      let col;
+
+      for (let i = 0; i < shipLength; i++) {
+        row = orientation === "x" ? y : y + i;
+        col = orientation === "x" ? x + i : x;
+
+        gameBoard[row][col] = { type: shipName, isHit: false };
       }
     }
   }
