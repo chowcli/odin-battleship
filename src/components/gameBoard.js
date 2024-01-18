@@ -14,16 +14,14 @@ function isOutOfBound(axisStartPoint, shipLength) {
 }
 
 function isOverlap(gameBoard, x, y, orientation, shipLength) {
-  if (orientation === "x") {
-    for (let i = 0; i < shipLength; i++) {
-      if (gameBoard[y][x + i] !== "") return true;
-    }
-  }
+  let row;
+  let col;
 
-  if (orientation === "y") {
-    for (let i = 0; i < shipLength; i++) {
-      if (gameBoard[y + i][x] !== "") return true;
-    }
+  for (let i = 0; i < shipLength; i++) {
+    row = orientation === "x" ? y : y + i;
+    col = orientation === "x" ? x + i : x;
+
+    if (gameBoard[row][col] !== "") return true;
   }
 
   return false;
