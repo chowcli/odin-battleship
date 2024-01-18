@@ -63,7 +63,25 @@ const Gameboard = () => {
     }
   }
 
-  return { getBoard, getFleet, getShip, addToFleet, placeShip };
+  function receiveAttack(x, y) {
+    if (gameBoard[y][x] === "") {
+      gameBoard[y][x] = 0;
+      return;
+    }
+
+    if (typeof gameBoard[y][x] === "object" && gameBoard[y][x].isHit === false) {
+      gameBoard[y][x].isHit = true;
+
+      const shipObject = getShip(gameBoard[y][x].type);
+      shipObject.isHit();
+    }
+  }
+
+  function isAllSunk() {
+    return fleet.every(ship => ship.isSunk());
+  }
+
+  return { getBoard, getFleet, getShip, addToFleet, placeShip, receiveAttack, isAllSunk };
 };
 
 export default Gameboard;
