@@ -8,8 +8,7 @@ const Ship = (name, length) => {
   const getShipLives = () => shipLives;
 
   function isHit() {
-    shipLives -= 1;
-    return shipLives;
+    if (shipLives > 0) shipLives -= 1;
   }
 
   function isSunk() {
