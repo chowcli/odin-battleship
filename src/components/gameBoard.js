@@ -39,8 +39,8 @@ const Gameboard = () => {
     return fleet.find(ship => ship.getShipName() === shipName);
   }
 
-  function addToFleet(ship) {
-    fleet.push(ship);
+  function addToFleet(...ship) {
+    fleet.push(...ship);
   }
 
   function placeShip(ship, x, y, orientation) {
