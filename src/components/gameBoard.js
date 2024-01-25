@@ -36,16 +36,16 @@ const Gameboard = () => {
   const getFleet = () => fleet;
 
   function getShip(shipName) {
-    return fleet.find(ship => ship.getShipName() === shipName);
+    return fleet.find(ship => ship.getName() === shipName);
   }
 
-  function addToFleet(...ship) {
-    fleet.push(...ship);
+  function addToFleet(...ships) {
+    fleet.push(...ships);
   }
 
   function placeShip(ship, x, y, orientation) {
-    const shipLength = ship.getShipLength();
-    const shipName = ship.getShipName();
+    const shipLength = ship.getLength();
+    const shipName = ship.getName();
 
     const isValidPlacement =
       !isOutOfBounds(x, y, orientation, shipLength) && !isOverlap(gameBoard, x, y, orientation, shipLength);
@@ -60,24 +60,36 @@ const Gameboard = () => {
 
         gameBoard[row][col] = { type: shipName, isHit: false };
       }
+
+      return true; // Placement was successful
     }
+
+    return false; // Placement failed
   }
 
   function receiveAttack(x, y) {
     const cell = gameBoard[y][x];
 
-    if (cell === "") gameBoard[y][x] = 0;
-    else if (cell.isHit === false) {
+    if (cell === "") {
+      gameBoard[y][x] = 0;
+      return 2; // miss
+    }
+
+    if (cell.isHit === false) {
       cell.isHit = true;
       getShip(cell.type).isHit();
+
+      return 1; // hit
     }
+
+    return 0; // attack unsuccessful
   }
 
-  function isAllSunk() {
+  function areAllSunk() {
     return fleet.every(ship => ship.isSunk());
   }
 
-  return { getBoard, getFleet, getShip, addToFleet, placeShip, receiveAttack, isAllSunk };
+  return { getBoard, getFleet, getShip, addToFleet, placeShip, receiveAttack, areAllSunk };
 };
 
 export default Gameboard;

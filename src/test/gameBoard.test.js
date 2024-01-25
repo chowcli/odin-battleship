@@ -245,7 +245,7 @@ describe("receiveAttack function of Gameboard factory", () => {
     expect(destroyer.getShipLives()).toEqual(1);
   });
 
-  describe("isAllSunk function of Gameboard factory", () => {
+  describe("areAllSunk function of Gameboard factory", () => {
     it("should return false when there are still ships left", () => {
       // attack on cruiser
       playerBoard.receiveAttack(5, 7);
@@ -261,7 +261,7 @@ describe("receiveAttack function of Gameboard factory", () => {
       expect(destroyer.getShipLives()).toEqual(0);
       expect(destroyer.isSunk()).toBeTruthy();
 
-      expect(playerBoard.isAllSunk()).toBeFalsy();
+      expect(playerBoard.areAllSunk()).toBeFalsy();
     });
 
     it("should return true when there is no ship left", () => {

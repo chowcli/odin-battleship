@@ -9,21 +9,21 @@ describe("Ship factory", () => {
   });
 
   it("should return lowercase shipName when call getShipName", () => {
-    expect(battleship.getShipName()).toEqual("battleship");
+    expect(battleship.getName()).toEqual("battleship");
   });
 
   it("should return shipLength when call getShipLength", () => {
-    expect(battleship.getShipLength()).toEqual(4);
+    expect(battleship.getLength()).toEqual(4);
   });
 
   it("should return shipLives when call getShipLives", () => {
-    expect(battleship.getShipLives()).toEqual(4);
+    expect(battleship.getLives()).toEqual(4);
   });
 
   it("should modify shipLives when call isHit", () => {
     battleship.isHit();
 
-    expect(battleship.getShipLives()).toEqual(3);
+    expect(battleship.getLives()).toEqual(3);
   });
 
   it("should return a boolean when call isSunk", () => {
