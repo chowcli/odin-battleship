@@ -7,7 +7,6 @@ const Player = (type = "human") => {
   const playerType = type;
   const boardObject = Gameboard();
   let enemyBoard;
-  const attackCoords = []; // only for randomAttack
 
   const getType = () => playerType;
   const getBoard = () => boardObject;
