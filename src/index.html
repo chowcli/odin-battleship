@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <h1>BATTLESHIP</h1>
+    </header>
+
+    <main>
+      <div class="board-container">
+        <div class="player-board"></div>
+
+        <div class="computer-board"></div>
+      </div>
+    </main>
+
+    <dialog class="ship-placement-dialog">
+      <div>
+        <p class="instruction">Place your Carrier</p>
+        <button class="change-axis">Axis: X</button>
+
+        <div class="ship-board"></div>
+      </div>
+    </dialog>
+
+    <dialog class="reset-game-dialog">
+      <div>
+        <h3 class="winner"></h3>
+
+        <button class="reset-game">RESTART</button>
+      </div>
+    </dialog>
+  </body>
+</html>

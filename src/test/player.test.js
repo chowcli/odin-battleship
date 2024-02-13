@@ -24,6 +24,7 @@ describe("Player vs Computer", () => {
     p1.randomShipPlacement();
     const updatedBoard = JSON.stringify(p1.getBoard().getBoard());
 
+    // Check if the updated board is different from the initial board
     expect(updatedBoard).not.toEqual(initialBoard);
   });
 
@@ -34,7 +35,7 @@ describe("Player vs Computer", () => {
   it("Player1: should return true if randomAttack is successful", () => {
     const result = p1.randomAttack();
 
-    expect(result === 1 || result === 2).toBeTruthy();
+    expect(result.attackSuccessful === 1 || result.attackSuccessful === 2).toBeTruthy();
   });
 
   it("Player2: should return true if attack is successful", () => {

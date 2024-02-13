@@ -1,32 +1,5 @@
 /* eslint-disable no-plusplus */
-function create2DArray() {
-  const gameBoard = new Array(10);
-
-  for (let i = 0; i < 10; i++) {
-    gameBoard[i] = new Array(10).fill("");
-  }
-
-  return gameBoard;
-}
-
-function isOutOfBounds(x, y, orientation, shipLength) {
-  const coordinate = orientation === "x" ? x : y;
-  return coordinate + shipLength - 1 >= 10;
-}
-
-function isOverlap(gameBoard, x, y, orientation, shipLength) {
-  let row;
-  let col;
-
-  for (let i = 0; i < shipLength; i++) {
-    row = orientation === "x" ? y : y + i;
-    col = orientation === "x" ? x + i : x;
-
-    if (gameBoard[row][col] !== "") return true;
-  }
-
-  return false;
-}
+import { create2DArray, isValidPlacement } from "./supportFnc";
 
 const Gameboard = () => {
   const gameBoard = create2DArray();
@@ -43,22 +16,19 @@ const Gameboard = () => {
     fleet.push(...ships);
   }
 
-  function placeShip(ship, x, y, orientation) {
+  function placeShip(ship, srtX, srtY, axis) {
     const shipLength = ship.getLength();
     const shipName = ship.getName();
 
-    const isValidPlacement =
-      !isOutOfBounds(x, y, orientation, shipLength) && !isOverlap(gameBoard, x, y, orientation, shipLength);
-
-    if (isValidPlacement) {
-      let row;
-      let col;
+    if (isValidPlacement(gameBoard, srtX, srtY, axis, shipLength)) {
+      let x;
+      let y;
 
       for (let i = 0; i < shipLength; i++) {
-        row = orientation === "x" ? y : y + i;
-        col = orientation === "x" ? x + i : x;
+        x = axis === "x" ? srtX + i : srtX;
+        y = axis === "x" ? srtY : srtY + i;
 
-        gameBoard[row][col] = { type: shipName, isHit: false };
+        gameBoard[y][x] = { type: shipName, isHit: false };
       }
 
       return true; // Placement was successful

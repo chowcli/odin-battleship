@@ -7,6 +7,7 @@ const Player = (type = "human") => {
   const playerType = type;
   const boardObject = Gameboard();
   let enemyBoard;
+  const attackCoords = []; // only for randomAttack
 
   const getType = () => playerType;
   const getBoard = () => boardObject;
@@ -43,19 +44,21 @@ const Player = (type = "human") => {
       while (!isPlacementSuccessful) {
         const srtX = getRandomCoords();
         const srtY = getRandomCoords();
-        const orientation = Math.random() < 0.5 ? "x" : "y";
+        const axis = Math.random() < 0.5 ? "x" : "y";
 
-        // Check if the chosen position is not too close to already occupied positions
         const isTooClose = occupiedPositions.some(({ x, y }) => Math.abs(x - srtX) < 2 && Math.abs(y - srtY) < 2);
 
         if (!isTooClose) {
-          isPlacementSuccessful = boardObject.placeShip(ship, srtX, srtY, orientation);
+          isPlacementSuccessful = boardObject.placeShip(ship, srtX, srtY, axis);
 
-          // If placement is successful, update occupied positions
           if (isPlacementSuccessful) {
+            let x;
+            let y;
+
             for (let i = 0; i < ship.getLength(); i++) {
-              const x = orientation === "x" ? srtY : srtY + i;
-              const y = orientation === "x" ? srtX + i : srtX;
+              x = axis === "x" ? srtX + i : srtX;
+              y = axis === "x" ? srtY : srtY + i;
+
               occupiedPositions.push({ x, y });
             }
           }
@@ -76,7 +79,7 @@ const Player = (type = "human") => {
       attackSuccessful = attack(x, y);
     }
 
-    return attackSuccessful;
+    return { x, y, attackSuccessful };
   }
 
   return {

@@ -3,10 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "airbnb-base",
-    "prettier" /* put this last to have chance override other configs */
-  ],
+  "extends": ["airbnb-base", "prettier" /* put this last to have chance override other configs */],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"

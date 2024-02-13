@@ -49,11 +49,11 @@ describe("placeShip function of Gameboard factory", () => {
         "",
         "",
         "",
-        { type: carrier.getShipName(), isHit: false },
-        { type: carrier.getShipName(), isHit: false },
-        { type: carrier.getShipName(), isHit: false },
-        { type: carrier.getShipName(), isHit: false },
-        { type: carrier.getShipName(), isHit: false },
+        { type: carrier.getName(), isHit: false },
+        { type: carrier.getName(), isHit: false },
+        { type: carrier.getName(), isHit: false },
+        { type: carrier.getName(), isHit: false },
+        { type: carrier.getName(), isHit: false },
         "",
         "",
       ],
@@ -64,14 +64,13 @@ describe("placeShip function of Gameboard factory", () => {
     ]);
   });
 
-  it("place destroyer on 2d array but is out of array bound so modify none", () => {
+  it("should return false when place destroyer on 2d array but is out of array bound", () => {
     const destroyer = Ship("destroyer", 2);
     const x = 9;
     const y = 3;
     const orientation = "x";
 
-    playerBoard.placeShip(destroyer, x, y, orientation);
-
+    expect(playerBoard.placeShip(destroyer, x, y, orientation)).toBeFalsy();
     expect(playerBoard.getBoard()).toEqual([
       ["", "", "", "", "", "", "", "", "", ""],
       ["", "", "", "", "", "", "", "", "", ""],
@@ -86,22 +85,21 @@ describe("placeShip function of Gameboard factory", () => {
     ]);
   });
 
-  it("should modify none if place ship on occupied cell", () => {
+  it("should return false if place ship on occupied cell", () => {
     const carrier = Ship("carrier", 5);
     const patrolBoat = Ship("patrol boat", 2);
 
-    playerBoard.placeShip(carrier, 5, 3, "y");
-    playerBoard.placeShip(patrolBoat, 4, 3, "x");
-
+    expect(playerBoard.placeShip(carrier, 5, 3, "y")).toBeTruthy();
+    expect(playerBoard.placeShip(patrolBoat, 4, 3, "x")).toBeFalsy();
     expect(playerBoard.getBoard()).toEqual([
       ["", "", "", "", "", "", "", "", "", ""],
       ["", "", "", "", "", "", "", "", "", ""],
       ["", "", "", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", { type: carrier.getShipName(), isHit: false }, "", "", "", ""],
-      ["", "", "", "", "", { type: carrier.getShipName(), isHit: false }, "", "", "", ""],
-      ["", "", "", "", "", { type: carrier.getShipName(), isHit: false }, "", "", "", ""],
-      ["", "", "", "", "", { type: carrier.getShipName(), isHit: false }, "", "", "", ""],
-      ["", "", "", "", "", { type: carrier.getShipName(), isHit: false }, "", "", "", ""],
+      ["", "", "", "", "", { type: carrier.getName(), isHit: false }, "", "", "", ""],
+      ["", "", "", "", "", { type: carrier.getName(), isHit: false }, "", "", "", ""],
+      ["", "", "", "", "", { type: carrier.getName(), isHit: false }, "", "", "", ""],
+      ["", "", "", "", "", { type: carrier.getName(), isHit: false }, "", "", "", ""],
+      ["", "", "", "", "", { type: carrier.getName(), isHit: false }, "", "", "", ""],
       ["", "", "", "", "", "", "", "", "", ""],
       ["", "", "", "", "", "", "", "", "", ""],
     ]);
@@ -239,10 +237,10 @@ describe("receiveAttack function of Gameboard factory", () => {
       ["", "", "", "", "", "", "", "", "", ""],
     ]);
 
-    expect(carrier.getShipLives()).toEqual(2);
-    expect(battleship.getShipLives()).toEqual(1);
-    expect(cruiser.getShipLives()).toEqual(1);
-    expect(destroyer.getShipLives()).toEqual(1);
+    expect(carrier.getLives()).toEqual(2);
+    expect(battleship.getLives()).toEqual(1);
+    expect(cruiser.getLives()).toEqual(1);
+    expect(destroyer.getLives()).toEqual(1);
   });
 
   describe("areAllSunk function of Gameboard factory", () => {
@@ -256,9 +254,9 @@ describe("receiveAttack function of Gameboard factory", () => {
       expect(battleship.isSunk()).toBeFalsy();
 
       // 2 ship sunk
-      expect(cruiser.getShipLives()).toEqual(0);
+      expect(cruiser.getLives()).toEqual(0);
       expect(cruiser.isSunk()).toBeTruthy();
-      expect(destroyer.getShipLives()).toEqual(0);
+      expect(destroyer.getLives()).toEqual(0);
       expect(destroyer.isSunk()).toBeTruthy();
 
       expect(playerBoard.areAllSunk()).toBeFalsy();
@@ -271,9 +269,9 @@ describe("receiveAttack function of Gameboard factory", () => {
       // attack on battleship
       playerBoard.receiveAttack(0, 0);
 
-      expect(carrier.getShipLives()).toEqual(0);
+      expect(carrier.getLives()).toEqual(0);
       expect(carrier.isSunk()).toBeTruthy();
-      expect(battleship.getShipLives()).toEqual(0);
+      expect(battleship.getLives()).toEqual(0);
       expect(battleship.isSunk()).toBeTruthy();
     });
   });

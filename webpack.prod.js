@@ -15,7 +15,7 @@ module.exports = merge(common, {
       chunkFilename: "[id].css",
     }),
     new HtmlWebpackPlugin({
-      title: "Weather App",
+      title: "Battleship",
       filename: "index.html",
       template: "./src/index.html",
       minify: {
