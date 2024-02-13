@@ -77,7 +77,7 @@ function BattlefieldHandler() {
     if (winner) {
       const resetGameDialog = document.querySelector(".reset-game-dialog");
       const h3 = resetGameDialog.querySelector("h3");
-      // const resetBtn = resetGameDialog.querySelector("button");
+      const resetBtn = resetGameDialog.querySelector("button");
 
       if (winner === 1) {
         h3.textContent = "Congratulations You Won!";
@@ -87,7 +87,9 @@ function BattlefieldHandler() {
 
       resetGameDialog.showModal();
 
-      // resetBtn.addEventListener("click", () => {});
+      resetBtn.addEventListener("click", () => {
+        window.location.reload();
+      });
     }
   }
 
